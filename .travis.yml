@@ -1,0 +1,10 @@
+language: node_js
+node_js:
+  - "0.10"
+before_script:
+  - npm install -g grunt-cli nodeunit istanbul
+script:
+  - npm run-script ci
+env:
+  global:
+    - secure: "LVWtvtw+txE29O0vR403FSewlfEGJeVVKMCdWjJ02hssgHF7X/my8pzWk2RO5pZwClzB6DKjtu1qY/Yj/z/MxcHNoig5j7XxkfkuFksMhfa3YKfvczbNksZvJ8eGnSWVITF7y/SeRIfg6/ex9S+/I2T0aWBRt1G+RQ2ipAjbztI="
