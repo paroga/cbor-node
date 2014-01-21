@@ -168,8 +168,6 @@ exports.decode = function(buffer, tagger, simpleValue) {
     return read(buffer.toString("utf8", offset, offset + length), length);
   }
   function readFloat16() {
-    var tempArrayBuffer = new ArrayBuffer(4);
-    var tempDataView = new DataView(tempArrayBuffer);
     var value = readUint16();
 
     var sign = value & 0x8000;
@@ -183,8 +181,9 @@ exports.decode = function(buffer, tagger, simpleValue) {
     else if (fraction !== 0)
       return fraction * POW_2_24;
 
-    tempDataView.setUint32(0, sign << 16 | exponent << 13 | fraction << 13);
-    return tempDataView.getFloat32(0);
+    var tempBuffer = new Buffer(4);
+    tempBuffer.writeUInt32BE(sign << 16 | exponent << 13 | fraction << 13, 0, NO_ASSERT);
+    return tempBuffer.readFloatBE(0, NO_ASSERT);
   }
   function readFloat32() {
     return read(buffer.readFloatBE(offset, NO_ASSERT), 4);
