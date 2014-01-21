@@ -23,7 +23,8 @@
  */
 
 (function(exports, undefined) { "use strict";
-var POW_2_24 = Math.pow(2, -24),
+var NO_ASSERT = true,
+    POW_2_24 = Math.pow(2, -24),
     POW_2_32 = Math.pow(2, 32),
     POW_2_53 = Math.pow(2, 53);
 
@@ -50,7 +51,7 @@ exports.encode = function(value) {
     offset += lastLength;
   }
   function writeFloat64(value) {
-    write(ensureSpace(8).writeDoubleBE(value, offset));
+    write(ensureSpace(8).writeDoubleBE(value, offset, NO_ASSERT));
   }
   function writeUint8(value) {
     write(ensureSpace(1).writeUInt8(value, offset));
@@ -61,17 +62,17 @@ exports.encode = function(value) {
     write();
   }
   function writeUint16(value) {
-    write(ensureSpace(2).writeUInt16BE(value, offset));
+    write(ensureSpace(2).writeUInt16BE(value, offset, NO_ASSERT));
   }
   function writeUint32(value) {
-    write(ensureSpace(4).writeUInt32BE(value, offset));
+    write(ensureSpace(4).writeUInt32BE(value, offset, NO_ASSERT));
   }
   function writeUint64(value) {
     var low = value % POW_2_32;
     var high = (value - low) / POW_2_32;
     var buffer = ensureSpace(8);
-    buffer.writeUInt32BE(high, offset);
-    buffer.writeUInt32BE(low, offset + 4);
+    buffer.writeUInt32BE(high, offset, NO_ASSERT);
+    buffer.writeUInt32BE(low, offset + 4, NO_ASSERT);
     write();
   }
   function writeTypeAndLength(type, length) {
@@ -186,19 +187,19 @@ exports.decode = function(buffer, tagger, simpleValue) {
     return tempDataView.getFloat32(0);
   }
   function readFloat32() {
-    return read(buffer.readFloatBE(offset), 4);
+    return read(buffer.readFloatBE(offset, NO_ASSERT), 4);
   }
   function readFloat64() {
-    return read(buffer.readDoubleBE(offset), 8);
+    return read(buffer.readDoubleBE(offset, NO_ASSERT), 8);
   }
   function readUint8() {
     return read(buffer.readUInt8(offset), 1);
   }
   function readUint16() {
-    return read(buffer.readUInt16BE(offset), 2);
+    return read(buffer.readUInt16BE(offset, NO_ASSERT), 2);
   }
   function readUint32() {
-    return read(buffer.readUInt32BE(offset), 4);
+    return read(buffer.readUInt32BE(offset, NO_ASSERT), 4);
   }
   function readUint64() {
     return readUint32() * POW_2_32 + readUint32();
