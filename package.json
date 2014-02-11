@@ -1,5 +1,5 @@
 {
-  "name": "cbor",
+  "name": "cbor-node",
   "version": "0.0.1",
   "description": "The Concise Binary Object Representation (CBOR) data format (RFC7049) implemented for Node.js.",
   "keywords": [
@@ -22,8 +22,8 @@
     "grunt": "~0.4.2",
     "grunt-cli": "~0.1.11",
     "grunt-contrib-jshint": "~0.8.0",
-    "grunt-contrib-nodeunit": "~0.2.2",
-    "grunt-coveralls": "~0.2.0",
+    "grunt-contrib-nodeunit": "~0.3.0",
+    "grunt-coveralls": "~0.3.0",
     "grunt-shell": "~0.6.3"
   }
 }
